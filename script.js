@@ -19,7 +19,7 @@ const employeesData = [
         age: 28,
         hoursWorked: 8,
         experience: ["Compensation & Benefits", "Performance Appraisals", "Onboarding"],
-        photo: "person2.png"
+        photo: "person20.png"
     },
     {
         fullName: { firstName: "Sara", lastName: "Noor" },
@@ -42,7 +42,7 @@ const employeesData = [
         age: 35,
         hoursWorked: 8,
         experience: ["Strategic Planning", "Team Leadership", "Budget Management"],
-        photo: "person4.png"
+        photo: "person19.png"
     },
     {
         fullName: { firstName: "Alice", lastName: "Johnson" },
@@ -75,6 +75,7 @@ const employeesData = [
         age: 30,
         hoursWorked: 8,
         experience: ["Construction Projects", "Site Supervision", "Quality Control"],
+        photo:"person10.png"
     },
     {
         fullName: { firstName: "Daniel", lastName: "Wilson" },
@@ -85,6 +86,7 @@ const employeesData = [
         age: 38,
         hoursWorked: 8,
         experience: ["Strategic Planning", "Leadership Development", "Project Management"],
+        photo:"person18.png"
     },
     {
         fullName: { firstName: "Linda", lastName: "Brown" },
@@ -95,6 +97,7 @@ const employeesData = [
         age: 29,
         hoursWorked: 7,
         experience: ["Construction", "Subcontractor Management", "Safety Regulations"],
+        photo:"person11.png"
     },
     {
         fullName: { firstName: "Chris", lastName: "Anderson" },
@@ -105,6 +108,7 @@ const employeesData = [
         age: 42,
         hoursWorked: 8,
         experience: ["Business Strategy", "Financial Analysis", "Team Leadership"],
+        photo:"person9.png"
     },
     {
         fullName: { firstName: "Megan", lastName: "Evans" },
@@ -115,6 +119,7 @@ const employeesData = [
         age: 31,
         hoursWorked: 8,
         experience: ["Construction Projects", "Project Scheduling", "Quality Assurance"],
+        photo:"person14.png"
     },
     {
         fullName: { firstName: "William", lastName: "Clark" },
@@ -125,6 +130,7 @@ const employeesData = [
         age: 45,
         hoursWorked: 8,
         experience: ["Business Development", "Team Building", "Budget Management"],
+        photo:"person16.png"
     },
     {
         fullName: { firstName: "Olivia", lastName: "Moore" },
@@ -135,6 +141,8 @@ const employeesData = [
         age: 32,
         hoursWorked: 8,
         experience: ["Construction Planning", "Supplier Relations", "Cost Control"],
+         photo:"person13.png"
+        
     },
     {
         fullName: { firstName: "Matthew", lastName: "Lee" },
@@ -145,6 +153,7 @@ const employeesData = [
         age: 47,
         hoursWorked: 8,
         experience: ["Strategic Planning", "Financial Analysis", "Team Leadership"],
+        photo:"person17.png"
     },
 ];
 
@@ -166,7 +175,9 @@ if (typeof document !== 'undefined') {
     var employee_container = document.getElementById("employees-container")
     var department_salaries_button = document.getElementById("show-total-salaries")
     var general_stats_button = document.getElementById("show-stats")
-
+    var unique_exp_button = document.getElementById("show-unique-exp")
+    var show_all_button = document.getElementById("show-all")
+    
 
     HR_button.addEventListener("click", (e) => {
         employee_container.innerHTML = ""
@@ -258,6 +269,58 @@ if (typeof document !== 'undefined') {
 
         )
     })
+
+    unique_exp_button.addEventListener("click",(e)=>{
+        e.preventDefault()
+        employee_container.innerHTML=""
+        createUniqueCard()
+    })
+
+    function createUniqueCard(){
+        let exps = getUniqueExperiences(employeesData)
+        let card = document.createElement("div")
+        let row = document.createElement("div")
+        let card_body = document.createElement("div")
+        let maintitle= document.createElement("h2")
+        maintitle.classList.add("text-info")
+        employee_container.appendChild(row)
+        row.appendChild(card)
+        maintitle.innerText=" Unique Experiences: "
+        card.appendChild(maintitle)
+        card.appendChild(card_body)
+
+        for (key in exps){
+            let h3 = document.createElement("h3")
+            let hr = document.createElement("hr")
+
+            
+            card.classList.add(..."card p-4 rounded border-blue drop-shadow-far col-10".split(" "))
+            row.classList.add(..."row d-flex justify-content-center".split(" "))
+            card_body.classList.add(..."card-body col-12 text-center".split(" "))
+
+            h3.innerText = key
+            card_body.appendChild(h3)
+            card_body.appendChild(hr)
+
+
+        }
+    }
+
+    show_all_button.addEventListener("click",e=>{
+        e.preventDefault()
+        createAllEmployees(employeesData)
+    })
+    
+    
+    function createAllEmployees(employeesData){
+        employee_container.innerHTML=""
+        employeesData.map(e=>{
+            let { experience_list, list } = createCard(e);
+            createdExperienceList(e, experience_list, list);
+        })
+    }
+
+    createAllEmployees(employeesData)
 }
 
 
@@ -567,7 +630,7 @@ function getUniqueExperiences(employeesData) {
     })
     let count = 1;
     for (key in experiences) { console.log(`${count++}. ${key}`) }
-
+    return experiences
 }
 
 
