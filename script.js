@@ -8,7 +8,7 @@ const employeesData = [
         age: 30,
         hoursWorked: 8,
         experience: ["Recruitment", "Employee Training", "HR Policy"],
-        photo: "person1.png"
+        photo: "person3.png"
     },
     {
         fullName: { firstName: "Mohamed", lastName: "Ali" },
@@ -42,6 +42,7 @@ const employeesData = [
         age: 35,
         hoursWorked: 8,
         experience: ["Strategic Planning", "Team Leadership", "Budget Management"],
+        photo:"person4.png"
     },
     {
         fullName: { firstName: "Alice", lastName: "Johnson" },
@@ -52,6 +53,7 @@ const employeesData = [
         age: 28,
         hoursWorked: 6,
         experience: ["Construction", "Project Management", "Supplier Relations"],
+        photo: "person6.png"
     },
     {
         fullName: { firstName: "Bob", lastName: "Smith" },
@@ -62,6 +64,7 @@ const employeesData = [
         age: 40,
         hoursWorked: 7,
         experience: ["Business Strategy", "Operations Management", "Staff Development"],
+        photo:"person5.png"
     },
     {
         fullName: { firstName: "Emily", lastName: "Davis" },
@@ -210,7 +213,7 @@ general_stats_button.addEventListener("click", (e)=>{
 
 
     employee_container.appendChild(card)
-    
+
     card.classList.add(..."card p-4 rounded border-blue drop-shadow-far col-10".split(" "))
     row.classList.add("row")
     
@@ -229,24 +232,30 @@ general_stats_button.addEventListener("click", (e)=>{
         { value : totalHours , text:"Total hours worked: "},
     ]
 
-    for (key in data) {
-        let span1= document.createElement("span")
-        let span2= document.createElement("span")
-        
-
-        span1.innerText=key + ": "
-        span1.classList.add("text-info")
-
-        span2.innerText=data[key]
+    data.forEach(obj => 
+        {
+            let span1= document.createElement("span")
+            let span2= document.createElement("span")
+            let h5 = document.createElement("h5")
+            h5.classList.add("card-title")
     
-        
-       
-        
-        card_body.appendChild(span1)
-        card_body.appendChild(span2)
-
-    }
+            span1.innerText=obj.text
+            span1.classList.add("text-info")
     
+            span2.innerText=obj.value
+        
+            
+           
+            card_body.appendChild(h5)
+            h5.appendChild(span1)
+            h5.appendChild(span2)
+            card_body.appendChild(document.createElement("hr"))
+
+    
+        }
+        
+
+    ) 
 })
 
 
