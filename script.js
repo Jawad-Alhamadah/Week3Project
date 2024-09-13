@@ -42,7 +42,7 @@ const employeesData = [
         age: 35,
         hoursWorked: 8,
         experience: ["Strategic Planning", "Team Leadership", "Budget Management"],
-        photo:"person4.png"
+        photo: "person4.png"
     },
     {
         fullName: { firstName: "Alice", lastName: "Johnson" },
@@ -64,7 +64,7 @@ const employeesData = [
         age: 40,
         hoursWorked: 7,
         experience: ["Business Strategy", "Operations Management", "Staff Development"],
-        photo:"person5.png"
+        photo: "person5.png"
     },
     {
         fullName: { firstName: "Emily", lastName: "Davis" },
@@ -157,119 +157,126 @@ let list_style = "list-group-flush"
 let list_group_item = "list-group-item"
 let text_info_span = "text-info"
 
-let HR_button = document.getElementById("show-HR");
-let employee_container = document.getElementById("employees-container")
-let department_salaries_button = document.getElementById("show-total-salaries")
-let general_stats_button = document.getElementById("show-stats")
 
-function createCard() {
+if (typeof document !== 'undefined') {
 
-}
 
-HR_button.addEventListener("click", (e) => {
-    employee_container.innerHTML = ""
-    e.preventDefault()
-    let HR_employees = getHREmployees(employeesData)
 
-    HR_employees.map(employee => {
-        let { experience_list, list } = createCard(employee);
-        createdExperienceList(employee, experience_list, list);
+    var HR_button = document.getElementById("show-HR");
+    var employee_container = document.getElementById("employees-container")
+    var department_salaries_button = document.getElementById("show-total-salaries")
+    var general_stats_button = document.getElementById("show-stats")
+
+
+    HR_button.addEventListener("click", (e) => {
+        employee_container.innerHTML = ""
+        e.preventDefault()
+        let HR_employees = getHREmployees(employeesData)
+
+        HR_employees.map(employee => {
+            let { experience_list, list } = createCard(employee);
+            createdExperienceList(employee, experience_list, list);
+
+        })
 
     })
 
-})
+    department_salaries_button.addEventListener("click", (e) => {
+        employee_container.innerHTML = ""
+        e.preventDefault()
 
-department_salaries_button.addEventListener("click", (e)=>{
-    employee_container.innerHTML =""
-    e.preventDefault()
-    
-    let salaries_table = getSalariesByDepartment(employeesData)
-    let keys = []
-    let vals = []
-    for (k in salaries_table){
-        keys.push(k)
-        vals.push(salaries_table[k])
-    }
+        let salaries_table = getSalariesByDepartment(employeesData)
+        let keys = []
+        let vals = []
+        for (k in salaries_table) {
+            keys.push(k)
+            vals.push(salaries_table[k])
+        }
 
-    let chart_canvas = createChart("pie", keys, vals, "Total Salary By Department")
+        let chart_canvas = createChart("pie", keys, vals, "Total Salary By Department")
 
-    createSalariesCard(chart_canvas, salaries_table)
-})
+        createSalariesCard(chart_canvas, salaries_table)
+    })
 
 
-general_stats_button.addEventListener("click", (e)=>{
-    employee_container.innerHTML =""
-    e.preventDefault()
-    let avgSalary = getAverageSalary(employeesData)
-    let avgAge = getAverageAge(employeesData)
-    let contEmployees = getContEmployment(employeesData,2022)
-    let totalHours = getTotalHours(employeesData)
-    
-    let card = document.createElement("div")
-    let row = document.createElement("div")
-    let card_body = document.createElement("div")
-    let mainTitle = document.createElement("h3")
-    let title = document.createElement("h3")
+    general_stats_button.addEventListener("click", (e) => {
+        employee_container.innerHTML = ""
+        e.preventDefault()
+        let avgSalary = getAverageSalary(employeesData)
+        let avgAge = getAverageAge(employeesData)
+        let contEmployees = getContEmployment(employeesData, 2022)
+        let totalHours = getTotalHours(employeesData)
+
+        let card = document.createElement("div")
+        let row = document.createElement("div")
+        let card_body = document.createElement("div")
+        let mainTitle = document.createElement("h3")
+        let title = document.createElement("h3")
 
 
-    employee_container.appendChild(card)
+        employee_container.appendChild(card)
 
-    card.classList.add(..."card p-4 rounded border-blue drop-shadow-far col-10".split(" "))
-    row.classList.add("row")
-    
-    card_body.classList.add(..."card-body col-4".split(" "))
+        card.classList.add(..."card p-4 rounded border-blue drop-shadow-far col-10".split(" "))
+        row.classList.add("row")
 
-    title.innerText = "General Statistics"
-    card.appendChild(title)
-    card.appendChild(row)
-    row.appendChild(card_body)
+        card_body.classList.add(..."card-body col-4".split(" "))
+
+        title.innerText = "General Statistics"
+        card.appendChild(title)
+        card.appendChild(row)
+        row.appendChild(card_body)
 
 
-    let data =[
-        { value : avgSalary , text:"Average Salary: "},
-        { value : avgAge , text:"Average Age: "},
-        { value : contEmployees , text:"Number of Continus Employees in starting in 2022: "},
-        { value : totalHours , text:"Total hours worked: "},
-    ]
+        let data = [
+            { value: avgSalary, text: "Average Salary: " },
+            { value: avgAge, text: "Average Age: " },
+            { value: contEmployees, text: "Number of Continus Employees in starting in 2022: " },
+            { value: totalHours, text: "Total hours worked: " },
+        ]
 
-    data.forEach(obj => 
-        {
-            let span1= document.createElement("span")
-            let span2= document.createElement("span")
+        data.forEach(obj => {
+            let span1 = document.createElement("span")
+            let span2 = document.createElement("span")
             let h5 = document.createElement("h5")
             h5.classList.add("card-title")
-    
-            span1.innerText=obj.text
+
+            span1.innerText = obj.text
             span1.classList.add("text-info")
-    
-            span2.innerText=obj.value
-        
-            
-           
+
+            span2.innerText = obj.value
+
+
+
             card_body.appendChild(h5)
             h5.appendChild(span1)
             h5.appendChild(span2)
             card_body.appendChild(document.createElement("hr"))
 
-    
+
         }
-        
-
-    ) 
-})
 
 
-function createSalariesCard(canvas,salaries_table){
+        )
+    })
+}
+
+
+
+
+
+
+
+function createSalariesCard(canvas, salaries_table) {
     let card = document.createElement("div")
     let row = document.createElement("div")
     let card_body = document.createElement("div")
     let mainTitle = document.createElement("h3")
-    
-    mainTitle.innerHTML ="Total salaries by Department: "
+
+    mainTitle.innerHTML = "Total salaries by Department: "
     row.appendChild(mainTitle)
     card.classList.add(..."card p-4 rounded border-blue drop-shadow-far col-10".split(" "))
     row.classList.add("row")
-    
+
     card_body.classList.add(..."card-body col-4".split(" "))
     canvas.classList.add(..."card-body col-4 d-flex justify-content-center align-items-center".split(" "))
     employee_container.appendChild(card)
@@ -278,16 +285,16 @@ function createSalariesCard(canvas,salaries_table){
     row.appendChild(canvas)
 
 
-    
-    for (key in salaries_table){
+
+    for (key in salaries_table) {
         let department = document.createElement("h5")
         department.classList.add("card-title")
         let span1 = document.createElement("span")
-        span1.innerText = key +": "
+        span1.innerText = key + ": "
         span1.classList.add("text-info")
 
         let span2 = document.createElement("span")
-        span2.innerText = "$"+salaries_table[key]
+        span2.innerText = "$" + salaries_table[key]
 
         card_body.appendChild(department)
         department.appendChild(span1)
@@ -295,38 +302,38 @@ function createSalariesCard(canvas,salaries_table){
         card_body.appendChild(document.createElement("hr"))
 
     }
-   
+
 
 
 }
-function createChart(type , labels, data , mainLabel){
+function createChart(type, labels, data, mainLabel) {
 
-    
-const ctx = document.createElement('canvas');
-ctx.setAttribute("id","myChart")
-new Chart(ctx, {
-  type: type,
 
-  data: {
-    labels: labels,
-    datasets: [{
-      label: mainLabel,
-      data: data,
-      borderWidth: 1
-    }]
-  },
-  options: {
-      responsive: true,
-  
-    scales: {
-      y: {
-        beginAtZero: true
-      }
-    }
-  }
-});
+    const ctx = document.createElement('canvas');
+    ctx.setAttribute("id", "myChart")
+    new Chart(ctx, {
+        type: type,
 
-return ctx
+        data: {
+            labels: labels,
+            datasets: [{
+                label: mainLabel,
+                data: data,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    return ctx
 }
 
 function createCard(employee) {
@@ -558,7 +565,7 @@ function getUniqueExperiences(employeesData) {
     employeesData.forEach(e => {
         e.experience.map(experience => experiences[experience] = "")
     })
-    let count =1;
+    let count = 1;
     for (key in experiences) { console.log(`${count++}. ${key}`) }
 
 }
@@ -583,3 +590,5 @@ getUniqueExperiences(employeesData)
 
 
 // Extra . 
+
+
