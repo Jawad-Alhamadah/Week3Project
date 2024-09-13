@@ -182,6 +182,10 @@ if (typeof document !== 'undefined') {
     HR_button.addEventListener("click", (e) => {
         employee_container.innerHTML = ""
         e.preventDefault()
+        let mainTitle = document.createElement("h1")
+        mainTitle.classList.add(..."mt-5 mb-5 ml-5 text-center text-secondary".split(" "))
+        employee_container.appendChild(mainTitle)
+        mainTitle.textContent ="HR Staff"
         let HR_employees = getHREmployees(employeesData)
 
         HR_employees.map(employee => {
@@ -314,6 +318,7 @@ if (typeof document !== 'undefined') {
     
     function createAllEmployees(employeesData){
         employee_container.innerHTML=""
+       
         employeesData.map(e=>{
             let { experience_list, list } = createCard(e);
             createdExperienceList(e, experience_list, list);
