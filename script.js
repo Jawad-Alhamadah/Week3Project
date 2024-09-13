@@ -156,7 +156,8 @@ let text_info_span = "text-info"
 
 let HR_button = document.getElementById("show-HR");
 let employee_container = document.getElementById("employees-container")
-
+let department_salaries_button = document.getElementById("show-total-salaries")
+let general_stats_button = document.getElementById("show-stats")
 
 function createCard() {
 
@@ -174,6 +175,150 @@ HR_button.addEventListener("click", (e) => {
     })
 
 })
+
+department_salaries_button.addEventListener("click", (e)=>{
+    employee_container.innerHTML =""
+    e.preventDefault()
+    
+    let salaries_table = getSalariesByDepartment(employeesData)
+    let keys = []
+    let vals = []
+    for (k in salaries_table){
+        keys.push(k)
+        vals.push(salaries_table[k])
+    }
+
+    let chart_canvas = createChart("pie", keys, vals, "Total Salary By Department")
+
+    createSalariesCard(chart_canvas, salaries_table)
+})
+
+
+general_stats_button.addEventListener("click", (e)=>{
+    employee_container.innerHTML =""
+    e.preventDefault()
+    let avgSalary = getAverageSalary(employeesData)
+    let avgAge = getAverageAge(employeesData)
+    let contEmployees = getContEmployment(employeesData,2022)
+    let totalHours = getTotalHours(employeesData)
+    
+    let card = document.createElement("div")
+    let row = document.createElement("div")
+    let card_body = document.createElement("div")
+    let mainTitle = document.createElement("h3")
+    let title = document.createElement("h3")
+
+
+    employee_container.appendChild(card)
+    
+    card.classList.add(..."card p-4 rounded border-blue drop-shadow-far col-10".split(" "))
+    row.classList.add("row")
+    
+    card_body.classList.add(..."card-body col-4".split(" "))
+
+    title.innerText = "General Statistics"
+    card.appendChild(title)
+    card.appendChild(row)
+    row.appendChild(card_body)
+
+
+    let data =[
+        { value : avgSalary , text:"Average Salary: "},
+        { value : avgAge , text:"Average Age: "},
+        { value : contEmployees , text:"Number of Continus Employees in starting in 2022: "},
+        { value : totalHours , text:"Total hours worked: "},
+    ]
+
+    for (key in data) {
+        let span1= document.createElement("span")
+        let span2= document.createElement("span")
+        
+
+        span1.innerText=key + ": "
+        span1.classList.add("text-info")
+
+        span2.innerText=data[key]
+    
+        
+       
+        
+        card_body.appendChild(span1)
+        card_body.appendChild(span2)
+
+    }
+    
+})
+
+
+function createSalariesCard(canvas,salaries_table){
+    let card = document.createElement("div")
+    let row = document.createElement("div")
+    let card_body = document.createElement("div")
+    let mainTitle = document.createElement("h3")
+    
+    mainTitle.innerHTML ="Total salaries by Department: "
+    row.appendChild(mainTitle)
+    card.classList.add(..."card p-4 rounded border-blue drop-shadow-far col-10".split(" "))
+    row.classList.add("row")
+    
+    card_body.classList.add(..."card-body col-4".split(" "))
+    canvas.classList.add(..."card-body col-4 d-flex justify-content-center align-items-center".split(" "))
+    employee_container.appendChild(card)
+    card.appendChild(row)
+    row.appendChild(card_body)
+    row.appendChild(canvas)
+
+
+    
+    for (key in salaries_table){
+        let department = document.createElement("h5")
+        department.classList.add("card-title")
+        let span1 = document.createElement("span")
+        span1.innerText = key +": "
+        span1.classList.add("text-info")
+
+        let span2 = document.createElement("span")
+        span2.innerText = "$"+salaries_table[key]
+
+        card_body.appendChild(department)
+        department.appendChild(span1)
+        department.appendChild(span2)
+        card_body.appendChild(document.createElement("hr"))
+
+    }
+   
+
+
+}
+function createChart(type , labels, data , mainLabel){
+
+    
+const ctx = document.createElement('canvas');
+ctx.setAttribute("id","myChart")
+new Chart(ctx, {
+  type: type,
+
+  data: {
+    labels: labels,
+    datasets: [{
+      label: mainLabel,
+      data: data,
+      borderWidth: 1
+    }]
+  },
+  options: {
+      responsive: true,
+  
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+
+return ctx
+}
 
 function createCard(employee) {
     let card = document.createElement("div");
@@ -255,6 +400,8 @@ function createItem(subtitle, experience_list) {
     return item;
 }
 
+
+
 // Question 1 ---------------------------------------------------------
 
 function getHREmployees(employeesData) {
@@ -283,6 +430,9 @@ function getSalariesByDepartment(employees) {
     console.log("Total Salaries By Department: ")
     for (department in salaries_table)
         console.log(department + ": $" + salaries_table[department])
+
+
+
     return salaries_table
 }
 
@@ -399,11 +549,13 @@ function getUniqueExperiences(employeesData) {
     employeesData.forEach(e => {
         e.experience.map(experience => experiences[experience] = "")
     })
-
-    for (key in experiences) { console.log(key) }
+    let count =1;
+    for (key in experiences) { console.log(`${count++}. ${key}`) }
 
 }
 
+
+//  Function Calls -----------------------------------------------------
 getHREmployees(employeesData)
 getSalariesByDepartment(employeesData)
 getAverageSalary(employeesData)
@@ -419,3 +571,6 @@ getNameByExperience(employeesData, "Construction Projects")
 
 getTotalHours(employeesData)
 getUniqueExperiences(employeesData)
+
+
+// Extra . 

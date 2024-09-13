@@ -1,20 +1,39 @@
 
 
-
 @media (min-width: 200px) {
+    
     .worker-card{
         width:24em !important;
     }
+    #myChart{
+        width: 100% !important;
+        max-width: 300px;
+        max-height: 300px;
+      }
+      
 }
 @media (min-width: 768px) {
     .worker-card{
         width:19em!important;
     }
+    #myChart{
+        width: 100% !important;
+        max-width: 400px;
+        max-height: 430px;
+      }
+      
 }
 @media (min-width: 992px) {
     .worker-card{
         width:23.5em!important;
     }
+
+    #myChart{
+        width: 100% !important;
+        max-width: 450px;
+        max-height: 480px;
+      }
+      
 }
 
  
