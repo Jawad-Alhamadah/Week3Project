@@ -15,44 +15,55 @@
 </head>
 <body>
     
-    <nav class="navbar navbar-expand-lg navbar-light bg-skyblue shadow-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-light ">
         <div class="container-fluid">
 
-          <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          <button class="navbar-toggler pl-5" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon color-white"></span>
           </button>
           <div class="collapse navbar-collapse " id="navbarNav">
             <ul class="navbar-nav ">
-                
-                <li class="nav-item  hover-bg-grey" aria-current="page">
-    
-                    <a class="nav-link " href="" id="show-all" >All Employees</a>
-        
-                  </li>
-
+          
               <li class="nav-item  hover-bg-grey" aria-current="page">
     
-                <a class="nav-link " href="" id="show-HR" >HR Employees</a>
+              
     
+                <div class="dropdown">
+                    <button class="btn  btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle='dropdown' aria-haspopup="true" aria-expanded="false">
+                     Employees By department
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="" id="show-all" >All </a>
+                        <a class="dropdown-item" href="" id="show-HR" >Human Resources</a>
+                        <a class="dropdown-item" href="#" id="show-managment">Managment </a>
+                        <a class="dropdown-item" href="#" id="show-contractors">Contractors </a>
+                    </div>
+                  </div> 
               </li>
               <li class="nav-item  hover-bg-grey " aria-current="page">
-                <a class="nav-link" href="#" id="show-total-salaries"> Total Deparment Salaries</a>
+                <a class="nav-link" href="#" id="show-total-salaries">Deparment Salaries</a>
               </li>
               <li class="nav-item  hover-bg-grey current-link" aria-current="page">
                 <a class="nav-link " href=""  id="show-stats">General Statistics</a>
               </li>
 
               <li class="nav-item  hover-bg-grey current-link" aria-current="page"></li>
-                <a class="nav-link " href=""  id="show-unique-exp">Unique Experiences</a>
+                <a class="nav-link " href=""  id="show-unique-exp">Experiences</a>
               </li>
-             
+
+               <li class="nav-item  hover-bg-grey current-link" aria-current="page"></li>
+              <a class="nav-link " href=""  id="show-construction-emp">Construction Employees</a> 
+
+            </li>
+           
+
             </ul>
           </div>
         </div>
       </nav>
 
-      <div class="row gap-4 justify-content-center bg-light-purple pt-5 " id="employees-container">
+      <div class="row gap-4 justify-content-center bg-light-purple pt-5 pb-5" id="employees-container">
          
             <!-- <div class="card  p-4  rounded border-blue drop-shadow-far col-10 ">
                 <div class="row "> 

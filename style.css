@@ -1,4 +1,6 @@
-
+body{
+    background-color: #0dcaf0 !important;
+}
 
 @media (min-width: 200px) {
     
@@ -42,8 +44,8 @@ ul{
 }
 .nav-link {
     color: rgb(40 138 171 / 55%);
-    font-size: 1.3em;
-    margin-left: 1em;
+    font-size: 1.1em;
+    margin-left: 0.4em;
 }
 
 .bg-light-purple{
@@ -96,3 +98,14 @@ ul{
 .text-info{
     text-transform: capitalize;
 }
+
+.drop-shadow-info{
+    filter: drop-shadow(3px 3px rgb(104, 210, 248)) 
+
+}
+
+.text-main-title{
+    font-size: 2.7em !important;
+    font-weight: 700;
+}
+

@@ -177,16 +177,22 @@ if (typeof document !== 'undefined') {
     var general_stats_button = document.getElementById("show-stats")
     var unique_exp_button = document.getElementById("show-unique-exp")
     var show_all_button = document.getElementById("show-all")
+    var show_construction_employees = document.getElementById("show-construction-emp")
+    var show_managment_employees = document.getElementById("show-managment")
+    var show_contractor_employees = document.getElementById("show-contractors")
+    
     
 
     HR_button.addEventListener("click", (e) => {
         employee_container.innerHTML = ""
         e.preventDefault()
-        let mainTitle = document.createElement("h1")
-        mainTitle.classList.add(..."mt-5 mb-5 ml-5 text-center text-secondary".split(" "))
-        employee_container.appendChild(mainTitle)
-        mainTitle.textContent ="HR Staff"
-        let HR_employees = getHREmployees(employeesData)
+        // let mainTitle = document.createElement("h1")
+        // mainTitle.classList.add(..."mt-5 mb-5 ml-5 text-center text-secondary".split(" "))
+        // employee_container.appendChild(mainTitle)
+        // mainTitle.textContent ="HR Staff"
+        let style = "mt-5 mb-5 ml-5 text-center text-main-title drop-shadow-info".split(" ")
+        createTitle("Our HR Staff",style)
+        let HR_employees = getEmployeesByDepartment(employeesData, "Human Resources (HR)")
 
         HR_employees.map(employee => {
             let { experience_list, list } = createCard(employee);
@@ -219,7 +225,7 @@ if (typeof document !== 'undefined') {
         e.preventDefault()
         let avgSalary = getAverageSalary(employeesData)
         let avgAge = getAverageAge(employeesData)
-        let contEmployees = getContEmployment(employeesData, 2022)
+        let contEmployees = getContEmployment(employeesData, 2024)
         let totalHours = getTotalHours(employeesData)
 
         let card = document.createElement("div")
@@ -245,7 +251,7 @@ if (typeof document !== 'undefined') {
         let data = [
             { value: avgSalary, text: "Average Salary: " },
             { value: avgAge, text: "Average Age: " },
-            { value: contEmployees, text: "Number of Continus Employees in starting in 2022: " },
+            { value: contEmployees, text: "Number of Continus Employees ending in 2024: " },
             { value: totalHours, text: "Total hours worked: " },
         ]
 
@@ -280,6 +286,43 @@ if (typeof document !== 'undefined') {
         createUniqueCard()
     })
 
+    show_construction_employees.addEventListener("click",(e)=>{
+        e.preventDefault()
+        employee_container.innerHTML=""
+        let style = "mt-5 mb-5 ml-5 text-center drop-shadow-info text-main-title".split(" ")
+        
+        createTitle("Workers with Construction Project Experience",style)
+        createEmployeeByEXP(employeesData,"Construction Projects")
+    })
+
+    
+    show_contractor_employees.addEventListener("click",(e)=>{
+        e.preventDefault()
+        employee_container.innerHTML=""
+        let style = "mt-5 mb-5 ml-5 text-center drop-shadow-info text-main-title".split(" ")
+        
+        createTitle("Our Contractor Employees",style)
+        createEmployeeByDepartment(employeesData, "Contractors")
+       
+    })
+
+    show_managment_employees.addEventListener("click",(e)=>{
+        e.preventDefault()
+        employee_container.innerHTML=""
+        let style = "mt-5 mb-5 ml-5 text-center drop-shadow-info text-main-title".split(" ")
+        
+        createTitle("Our Managment Employees",style)
+        createEmployeeByDepartment(employeesData, "Management")
+    })
+
+
+    function createTitle(text ,style){
+        let mainTitle = document.createElement("h1")
+        mainTitle.classList.add(...style)
+        employee_container.appendChild(mainTitle)
+        mainTitle.textContent =text
+    }
+
     function createUniqueCard(){
         let exps = getUniqueExperiences(employeesData)
         let card = document.createElement("div")
@@ -312,18 +355,43 @@ if (typeof document !== 'undefined') {
 
     show_all_button.addEventListener("click",e=>{
         e.preventDefault()
+        
         createAllEmployees(employeesData)
     })
     
     
     function createAllEmployees(employeesData){
         employee_container.innerHTML=""
-       
+        let style  = "mt-5 mb-5 ml-5 text-center text-main-title drop-shadow-info".split(" ")
+        createTitle("Our Amazing Staff",style)
+
         employeesData.map(e=>{
             let { experience_list, list } = createCard(e);
             createdExperienceList(e, experience_list, list);
         })
+   
     }
+
+    function createEmployeeByEXP(employeesData,exp){
+
+        let employees  = getEmployeeByExperience(employeesData,exp)
+        employees.map(e=>{
+            let { experience_list, list } = createCard(e);
+            createdExperienceList(e, experience_list, list);
+        })
+   
+    }
+
+    function createEmployeeByDepartment(employeesData,department){
+
+        let employees  = getEmployeesByDepartment(employeesData,department)
+        employees.map(e=>{
+            let { experience_list, list } = createCard(e);
+            createdExperienceList(e, experience_list, list);
+        })
+   
+    }
+
 
     createAllEmployees(employeesData)
 }
@@ -488,11 +556,11 @@ function createItem(subtitle, experience_list) {
 
 // Question 1 ---------------------------------------------------------
 
-function getHREmployees(employeesData) {
-    let HR = employeesData.filter(employee => employee.department === "Human Resources (HR)");
-    console.log("HR Department Employees:")
-    console.log(HR)
-    return HR
+function getEmployeesByDepartment(employeesData, department) {
+    let employees = employeesData.filter(employee => employee.department === department);
+    console.log(department+ " Employees:")
+    console.log(employees)
+    return employees
 }
 
 
@@ -577,7 +645,7 @@ function millisToDays(date) {
 function getContEmployment(employeesData, year) {
 
     let employeeByYear = employeesData.filter(e => {
-        let sameYear = parseInt(e.entryDate.split("/")[2]) === year
+        let sameYear = parseInt(e.exitDate.split("/")[2]) === year
         let isAYear = (millisToDays(e.exitDate) - millisToDays(e.entryDate) > 365)
         return sameYear && isAYear
     })
@@ -604,15 +672,17 @@ function addSalaryBonus(firstName, lastName, employeesData, dealAmount, bonusRat
 }
 
 //  Qustion 8 --------------------------------------------------------
-function getNameByExperience(employeesData, exp) {
+function getEmployeeByExperience(employeesData, exp) {
     let names = []
-
+    let employees =[]
     employeesData.forEach(e => {
-        if (e.experience.includes(exp))
+        if (e.experience.includes(exp)){
             names.push(e.fullName.firstName + " " + e.fullName.lastName)
+            employees .push(e)
+        }
     })
     console.log(`Employees with "Construction Projects" Experience: ${names.join(", ")}`)
-    return names
+    return employees
 
 
 }
@@ -640,18 +710,18 @@ function getUniqueExperiences(employeesData) {
 
 
 //  Function Calls -----------------------------------------------------
-getHREmployees(employeesData)
+getEmployeesByDepartment(employeesData, "Human Resources (HR)")
 getSalariesByDepartment(employeesData)
 getAverageSalary(employeesData)
 getAverageAge(employeesData)
 
 
 calcBonus(employeesData, 3)
-
+getContEmployment(employeesData, 2024)
 
 addSalaryBonus("Ahmed", "Khalid", employeesData, 3000000.0, 0.005)
 
-getNameByExperience(employeesData, "Construction Projects")
+getEmployeeByExperience(employeesData, "Construction Projects")
 
 getTotalHours(employeesData)
 getUniqueExperiences(employeesData)
