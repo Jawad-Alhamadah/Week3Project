@@ -290,16 +290,6 @@ if (typeof document !== 'undefined') {
         createUniqueCard()
     })
 
-    // show_construction_employees.addEventListener("click",(e)=>{
-    //     e.preventDefault()
-    //     employee_container.innerHTML=""
-    //     let style = "mt-5 mb-5 ml-5 text-center drop-shadow-info text-main-title".split(" ")
-        
-    //     createTitle("Workers with Construction Project Experience",style)
-    //     createEmployeeByEXP(employeesData,"Construction Projects")
-    // })
-
-    
     show_contractor_employees.addEventListener("click",(e)=>{
         e.preventDefault()
         employee_container.innerHTML=""
@@ -574,7 +564,7 @@ function addExpMenu (){
             employee_container.innerHTML=""
             let style = "mt-5 mb-5 ml-5 text-center drop-shadow-info text-main-title".split(" ")
             
-            createTitle(`Workers with ${event.target.id} Experience`,style)
+            createTitle(`Staff with ${event.target.id} Experience`,style)
             createEmployeeByEXP(employeesData, event.target.id)       
 
         })
