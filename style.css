@@ -5,7 +5,7 @@ body{
 @media (min-width: 200px) {
     
     .worker-card{
-        width:24em !important;
+        width:20em !important;
     }
     #myChart{
         width: 100% !important;
@@ -16,7 +16,7 @@ body{
 }
 @media (min-width: 768px) {
     .worker-card{
-        width:19em!important;
+        width:23em!important;
     }
     #myChart{
         width: 100% !important;
@@ -109,3 +109,11 @@ ul{
     font-weight: 700;
 }
 
+.scroll {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
+.dropdown-toggle{
+    margin: 0.5em;
+}

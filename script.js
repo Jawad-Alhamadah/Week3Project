@@ -167,8 +167,12 @@ let list_group_item = "list-group-item"
 let text_info_span = "text-info"
 
 
+
+
+
 if (typeof document !== 'undefined') {
 
+    addExpMenu()
 
 
     var HR_button = document.getElementById("show-HR");
@@ -191,7 +195,7 @@ if (typeof document !== 'undefined') {
         // employee_container.appendChild(mainTitle)
         // mainTitle.textContent ="HR Staff"
         let style = "mt-5 mb-5 ml-5 text-center text-main-title drop-shadow-info".split(" ")
-        createTitle("Our HR Staff",style)
+        createTitle("Our HR Employees",style)
         let HR_employees = getEmployeesByDepartment(employeesData, "Human Resources (HR)")
 
         HR_employees.map(employee => {
@@ -286,14 +290,14 @@ if (typeof document !== 'undefined') {
         createUniqueCard()
     })
 
-    show_construction_employees.addEventListener("click",(e)=>{
-        e.preventDefault()
-        employee_container.innerHTML=""
-        let style = "mt-5 mb-5 ml-5 text-center drop-shadow-info text-main-title".split(" ")
+    // show_construction_employees.addEventListener("click",(e)=>{
+    //     e.preventDefault()
+    //     employee_container.innerHTML=""
+    //     let style = "mt-5 mb-5 ml-5 text-center drop-shadow-info text-main-title".split(" ")
         
-        createTitle("Workers with Construction Project Experience",style)
-        createEmployeeByEXP(employeesData,"Construction Projects")
-    })
+    //     createTitle("Workers with Construction Project Experience",style)
+    //     createEmployeeByEXP(employeesData,"Construction Projects")
+    // })
 
     
     show_contractor_employees.addEventListener("click",(e)=>{
@@ -553,6 +557,34 @@ function createItem(subtitle, experience_list) {
 }
 
 
+function addExpMenu (){
+    let menu = document.getElementById("exp-menu")
+    let experiences = getUniqueExperiences(employeesData)
+
+    for (exp in experiences){
+        let exp_button = document.createElement("a")
+        menu.appendChild(exp_button)
+        exp_button.setAttribute("class" ,"dropdown-item")
+        exp_button.setAttribute("href" ,"")
+        exp_button.setAttribute("id",exp)
+        exp_button.textContent = exp
+        exp_button.addEventListener("click",(event)=>{
+            event.preventDefault()
+           
+            employee_container.innerHTML=""
+            let style = "mt-5 mb-5 ml-5 text-center drop-shadow-info text-main-title".split(" ")
+            
+            createTitle(`Workers with ${event.target.id} Experience`,style)
+            createEmployeeByEXP(employeesData, event.target.id)       
+
+        })
+    }
+
+
+    
+}
+
+
 
 // Question 1 ---------------------------------------------------------
 
@@ -681,7 +713,7 @@ function getEmployeeByExperience(employeesData, exp) {
             employees .push(e)
         }
     })
-    console.log(`Employees with "Construction Projects" Experience: ${names.join(", ")}`)
+    console.log(`Employees with ${exp} Experience: ${names.join(", ")}`)
     return employees
 
 
@@ -707,6 +739,7 @@ function getUniqueExperiences(employeesData) {
     for (key in experiences) { console.log(`${count++}. ${key}`) }
     return experiences
 }
+
 
 
 //  Function Calls -----------------------------------------------------
