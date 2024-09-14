@@ -190,10 +190,6 @@ if (typeof document !== 'undefined') {
     HR_button.addEventListener("click", (e) => {
         employee_container.innerHTML = ""
         e.preventDefault()
-        // let mainTitle = document.createElement("h1")
-        // mainTitle.classList.add(..."mt-5 mb-5 ml-5 text-center text-secondary".split(" "))
-        // employee_container.appendChild(mainTitle)
-        // mainTitle.textContent ="HR Staff"
         let style = "mt-5 mb-5 ml-5 text-center text-main-title drop-shadow-info".split(" ")
         createTitle("Our HR Employees",style)
         let HR_employees = getEmployeesByDepartment(employeesData, "Human Resources (HR)")
@@ -310,82 +306,12 @@ if (typeof document !== 'undefined') {
     })
 
 
-    function createTitle(text ,style){
-        let mainTitle = document.createElement("h1")
-        mainTitle.classList.add(...style)
-        employee_container.appendChild(mainTitle)
-        mainTitle.textContent =text
-    }
-
-    function createUniqueCard(){
-        let exps = getUniqueExperiences(employeesData)
-        let card = document.createElement("div")
-        let row = document.createElement("div")
-        let card_body = document.createElement("div")
-        let maintitle= document.createElement("h2")
-        maintitle.classList.add("text-info")
-        employee_container.appendChild(row)
-        row.appendChild(card)
-        maintitle.innerText=" Unique Experiences: "
-        card.appendChild(maintitle)
-        card.appendChild(card_body)
-
-        for (key in exps){
-            let h3 = document.createElement("h3")
-            let hr = document.createElement("hr")
-
-            
-            card.classList.add(..."card p-4 rounded border-blue drop-shadow-far col-10".split(" "))
-            row.classList.add(..."row d-flex justify-content-center".split(" "))
-            card_body.classList.add(..."card-body col-12 text-center".split(" "))
-
-            h3.innerText = key
-            card_body.appendChild(h3)
-            card_body.appendChild(hr)
-
-
-        }
-    }
 
     show_all_button.addEventListener("click",e=>{
         e.preventDefault()
         
         createAllEmployees(employeesData)
     })
-    
-    
-    function createAllEmployees(employeesData){
-        employee_container.innerHTML=""
-        let style  = "mt-5 mb-5 ml-5 text-center text-main-title drop-shadow-info".split(" ")
-        createTitle("Our Amazing Staff",style)
-
-        employeesData.map(e=>{
-            let { experience_list, list } = createCard(e);
-            createdExperienceList(e, experience_list, list);
-        })
-   
-    }
-
-    function createEmployeeByEXP(employeesData,exp){
-
-        let employees  = getEmployeeByExperience(employeesData,exp)
-        employees.map(e=>{
-            let { experience_list, list } = createCard(e);
-            createdExperienceList(e, experience_list, list);
-        })
-   
-    }
-
-    function createEmployeeByDepartment(employeesData,department){
-
-        let employees  = getEmployeesByDepartment(employeesData,department)
-        employees.map(e=>{
-            let { experience_list, list } = createCard(e);
-            createdExperienceList(e, experience_list, list);
-        })
-   
-    }
-
 
     createAllEmployees(employeesData)
 }
@@ -753,3 +679,78 @@ getUniqueExperiences(employeesData)
 // Extra . 
 
 
+
+
+
+
+function createTitle(text ,style){
+    let mainTitle = document.createElement("h1")
+    mainTitle.classList.add(...style)
+    employee_container.appendChild(mainTitle)
+    mainTitle.textContent =text
+}
+
+function createUniqueCard(){
+    let exps = getUniqueExperiences(employeesData)
+    let card = document.createElement("div")
+    let row = document.createElement("div")
+    let card_body = document.createElement("div")
+    let maintitle= document.createElement("h2")
+    maintitle.classList.add("text-info")
+    employee_container.appendChild(row)
+    row.appendChild(card)
+    maintitle.innerText=" Unique Experiences: "
+    card.appendChild(maintitle)
+    card.appendChild(card_body)
+
+    for (key in exps){
+        let h3 = document.createElement("h3")
+        let hr = document.createElement("hr")
+
+        
+        card.classList.add(..."card p-4 rounded border-blue drop-shadow-far col-10".split(" "))
+        row.classList.add(..."row d-flex justify-content-center".split(" "))
+        card_body.classList.add(..."card-body col-12 text-center".split(" "))
+
+        h3.innerText = key
+        card_body.appendChild(h3)
+        card_body.appendChild(hr)
+
+
+    }
+}
+
+
+
+
+function createAllEmployees(employeesData){
+    employee_container.innerHTML=""
+    let style  = "mt-5 mb-5 ml-5 text-center text-main-title drop-shadow-info".split(" ")
+    createTitle("Our Amazing Staff",style)
+
+    employeesData.map(e=>{
+        let { experience_list, list } = createCard(e);
+        createdExperienceList(e, experience_list, list);
+    })
+
+}
+
+function createEmployeeByEXP(employeesData,exp){
+
+    let employees  = getEmployeeByExperience(employeesData,exp)
+    employees.map(e=>{
+        let { experience_list, list } = createCard(e);
+        createdExperienceList(e, experience_list, list);
+    })
+
+}
+
+function createEmployeeByDepartment(employeesData,department){
+
+    let employees  = getEmployeesByDepartment(employeesData,department)
+    employees.map(e=>{
+        let { experience_list, list } = createCard(e);
+        createdExperienceList(e, experience_list, list);
+    })
+
+}
