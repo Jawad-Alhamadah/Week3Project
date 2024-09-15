@@ -1,3 +1,6 @@
+
+
+// QUESTION ANSWERS LINE 508 -----------------------------------------------------------------------------------
 const employeesData = [
     {
         fullName: { firstName: "Ahmed", lastName: "Khalid" },
@@ -156,7 +159,7 @@ const employeesData = [
         photo:"person17.png"
     },
 ];
-
+// QUESTION ANSWERS LINE 508 -----------------------------------------------------------------------------------
 
 let card_style = "card worker-card p-4 rounded border-blue drop-shadow-far".split(" ")
 let card_img_style = "card-img-top mt-3 drop-shadow-close".split(" ")
